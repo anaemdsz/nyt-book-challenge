@@ -1,0 +1,70 @@
+.entry {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.entry:before {
+  content: attr(data-text);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 50%; /* change 'left' to 'right' */
+  margin-right: 15px; /* change 'margin-left' to 'margin-right' */
+  width: 200px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+  white-space: pre-wrap;
+  display: none;
+  z-index: 10;
+}
+
+.entry:hover:before {
+  display: block;
+}
+
+.book-image {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+
+.cover-image {
+  width: 75px;
+  height: auto;
+}
+
+.book-details {
+  flex: 1 1 auto;
+}
+
+.book-title {
+  font-size: 18px;
+  margin: 0;
+}
+
+.book-author,
+.book-publisher {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.book-description {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.book-stats {
+  font-size: 14px;
+  margin-top: 20px;
+}
+/* Book.css */
+
+.book-image {
+  position: relative;
+}
+
+/* Adjust the styles as needed */

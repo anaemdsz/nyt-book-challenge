@@ -1,0 +1,29 @@
+.book-list-container {
+    display: flex;
+    white-space: nowrap;
+    padding: 20px 0;
+  }
+  
+  .book-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 0 20px;
+    align-self: center;
+  }
+
+  /* Optional: Adjust the width of the books based on your needs */
+  .book {
+    flex: 0 0 300px;
+  }
+  
+.book-list-scroll {
+  align-self: center;
+  width: 25px;
+  height: 10dvh;
+
+  background-color: rgba(126, 126, 126, 0.74);
+
+  border: none;
+  border-radius: 8px;
+}
