@@ -47,7 +47,8 @@ const App = () => {
         const response = await axiosInstance.get(
           `/svc/books/v3/lists/best-sellers/history.json?api-key=${apiKey}`
         );
-        const bestSellersData = response.data.results;
+        const bestSellersData = response.data.results
+
         setBestSellers(bestSellersData);
       } catch (error) {
         console.error("Error fetching best sellers:", error);
@@ -75,6 +76,11 @@ const App = () => {
           </div>
         ))}
       </main>
+      <footer class="app-footer">
+        <a href="https://github.com/anaemdsz/nyt-book-challenge">
+          Github
+        </a><div>-</div><a href="https://developer.nytimes.com/docs/books-product/1/overview">NYT API</a>
+      </footer>
     </div>
   );
 };

@@ -18,6 +18,14 @@
     overflow-y: auto;
   }
   
+  .app-footer {
+    background-color: #f1f1f1;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
   .book-list-wrapper {
     width: 100%;
     max-width: 75vw;
