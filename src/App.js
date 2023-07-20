@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Component } from "react";
 import BookList from "./components/BookList";
 import "./App.css";
 import axios from "axios";
@@ -16,8 +16,8 @@ axiosInstance.interceptors.response.use(
   (error) => {
     const status = error.response ? error.response.status : null;
     if (status === 429) {
-      console.log("Rate limit exceeded. Retrying after 3 seconds...");
-      return new Promise((resolve) => setTimeout(resolve, 3000)).then(() =>
+      console.log("Rate limit exceeded. Retrying after 2 seconds...");
+      return new Promise((resolve) => setTimeout(resolve, 3500)).then(() =>
         axiosInstance(error.config)
       );
     }
@@ -25,64 +25,72 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-const App = () => {
-  const [lists, setLists] = useState([]);
-  const [bestSellers, setBestSellers] = useState([]);
-
-  useEffect(() => {
-    const fetchLists = async () => {
-      try {
-        const response = await axiosInstance.get(
-          `/svc/books/v3/lists/full-overview?api-key=${apiKey}`
-        );
-        const listsData = response.data.results.lists;
-        setLists(listsData);
-      } catch (error) {
-        console.error("Error fetching book lists:", error);
-      }
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lists: [],
+      bestSellers: [],
     };
+  }
 
-    const fetchBestSellers = async () => {
-      try {
-        const response = await axiosInstance.get(
-          `/svc/books/v3/lists/best-sellers/history.json?api-key=${apiKey}`
-        );
-        const bestSellersData = response.data.results
+  async componentDidMount() {
+    await this.fetchLists();
+    await this.fetchBestSellers();
+  }
 
-        setBestSellers(bestSellersData);
-      } catch (error) {
-        console.error("Error fetching best sellers:", error);
-      }
-    };
+  fetchLists = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/svc/books/v3/lists/full-overview?api-key=${apiKey}`
+      );
+      const listsData = response.data.results.lists;
+      this.setState({ lists: listsData });
+    } catch (error) {
+      console.error("Error fetching book lists:", error);
+    }
+  };
 
-    fetchLists();
-    fetchBestSellers();
-  }, []);
+  fetchBestSellers = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/svc/books/v3/lists/best-sellers/history.json?api-key=${apiKey}`
+      );
+      const bestSellersData = response.data.results;
+      this.setState({ bestSellers: bestSellersData });
+    } catch (error) {
+      console.error("Error fetching best sellers:", error);
+    }
+  };
 
-  return (
-    <div className="app-container">
-      <header className="header">
-        <h2>NYT Best Sellers</h2>
-      </header>
-      <main className="main-body">
-        <div className="book-list-wrapper">
-          <h2>Best Sellers</h2>
-          <BookList books={bestSellers} />
-        </div>
-        {lists.map((list) => (
-          <div className="book-list-wrapper" key={list.list_id}>
-            <h2>{list.list_name}</h2>
-            <BookList books={list.books} />
+  render() {
+    const { lists, bestSellers } = this.state;
+
+    return (
+      <div className="app-container">
+        <header className="header">
+          <h2>NYT Best Sellers</h2>
+        </header>
+        <main className="main-body">
+          <div className="book-list-wrapper">
+            <h2>Best Sellers</h2>
+            <BookList books={bestSellers} />
           </div>
-        ))}
-      </main>
-      <footer class="app-footer">
-        <a href="https://github.com/anaemdsz/nyt-book-challenge">
-          Github
-        </a><div>-</div><a href="https://developer.nytimes.com/docs/books-product/1/overview">NYT API</a>
-      </footer>
-    </div>
-  );
-};
+          {lists.map((list) => (
+            <div className="book-list-wrapper" key={list.list_id}>
+              <h2>{list.list_name}</h2>
+              <BookList books={list.books} />
+            </div>
+          ))}
+        </main>
+        <footer className="app-footer">
+          <a href="https://github.com/anaemdsz/nyt-book-challenge">Github</a>
+          <div>-</div>
+          <a href="https://developer.nytimes.com/docs/books-product/1/overview">NYT API</a>
+        </footer>
+      </div>
+    );
+  }
+}
 
 export default App;

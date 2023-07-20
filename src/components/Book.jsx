@@ -13,11 +13,13 @@ class Book extends Component {
               src={book.book_image}
               className="cover-image"
               id={"cover-" + book.rank}
+              alt={book.title}
             />
           ) : (
             <img
               src={process.env.PUBLIC_URL + "/cover_image.jpg"}              className="cover-image"
               id={"cover-" + book.rank}
+              alt={book.title}
             />
           )}
         </div>
