@@ -8,11 +8,11 @@
 .entry:before {
   content: attr(data-text);
   position: absolute;
-  top: 50%;
+  top: 55%;
   transform: translateY(-50%);
-  left: 50%; /* change 'left' to 'right' */
+  left: 40%; /* change 'left' to 'right' */
   margin-right: 15px; /* change 'margin-left' to 'margin-right' */
-  width: 200px;
+  width: 300px;
   padding: 10px;
   border-radius: 10px;
   background: #000;
@@ -20,7 +20,7 @@
   text-align: center;
   white-space: pre-wrap;
   display: none;
-  z-index: 10;
+  z-index: 100;
 }
 
 .entry:hover:before {
